@@ -13,17 +13,18 @@
   --elevation-16dp: rgb(54, 54, 54); /* modal bottom/side, nav drawer */
   --elevation-24dp: rgb(56, 56, 56); /* dialogue */
   /* brand/element colors */
-  --color-primary: /* 200 tonal range */
-  --color-primary-var: /* 500 tonal range */
-  --color-secondary: /* 50-200 tonal range */
-  --color-secondary-var: /* 50-200 tonal range */
+  /* --color-primary: 200 tonal range
+  --color-primary-var: 500 tonal range
+  --color-secondary: 50-200 tonal range
+  --color-secondary-var: 50-200 tonal range */
   /* text */
-  --text-black-high: rgba(0, 0, 0, 0.87);
-  --text-black-med: rgba(0, 0, 0, 0.6);
-  --text-black-low: rgba(0, 0, 0, 0.38);
-  --text-white-high: rgba(255, 255, 255, 0.87);
-  --text-white-med: rgba(255, 255, 255, 0.6);
-  --text-white-low: rgba(255, 255, 255, 0.38);
+  --text-primary-high: rgba(0, 0, 0, 1);
+  --text-secondary-med: rgba(0, 0, 0, 0.6);
+  --text-secondary-low: rgba(0, 0, 0, 0.38);
+  --text-primary-high: rgba(255, 255, 255, 0.87);
+  --text-primary-med: rgba(255, 255, 255, 0.6);
+  --text-primary-low: rgba(255, 255, 255, 0.38);
+
   /* misc */
   --active: 87%;
   --inactive: 60%;
@@ -38,17 +39,17 @@
   /* backgrounds */
   --background-primary: rgb(240, 240, 240);
   /* brand/element colors */
-  --color-primary: /* 500 tonal range */
-  --color-primary-var: /* +/- 200 of primary */
-  --color-secondary: /* 500 tonal range */
-  --color-secondary-var: /* +/- 200 of primary */
+  /* --color-primary: 500 tonal range
+  --color-primary-var: +/- 200 of primary
+  --color-secondary: 500 tonal range
+  --color-secondary-var: +/- 200 of primary */
   /* text */
-  --text-black-high: rgba(0, 0, 0, 0.87);
-  --text-black-med: rgba(0, 0, 0, 0.6);
-  --text-black-low: rgba(0, 0, 0, 0.38);
-  --text-white-high: rgba(255, 255, 255, 0.87);
-  --text-white-med: rgba(255, 255, 255, 0.6);
-  --text-white-low: rgba(255, 255, 255, 0.38);
+  --text-primary-high: rgba(0, 0, 0, 0.87);
+  --text-primary-med: rgba(0, 0, 0, 0.6);
+  --text-primary-low: rgba(0, 0, 0, 0.38);
+  --text-secondary-high: rgba(255, 255, 255, 0.87);
+  --text-secondary-med: rgba(255, 255, 255, 0.6);
+  --text-secondary-low: rgba(255, 255, 255, 0.38);
   /* misc */
   --active: 87%;
   --inactive: 60%;
@@ -114,8 +115,6 @@ body {
 }
 
 .top-bar {
-  display: flex;
-  justify-content: flex-end;
   position: absolute;
   width: 100%;
   top: 0;
@@ -125,10 +124,11 @@ body {
 }
 
 .switch {
-  position: relative;
+  position: absolute;
   display: inline-block;
   width: 60px;
   height: 34px;
+  right: 10px;
 }
 
 .switch input {
@@ -153,10 +153,10 @@ body {
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  left: 3px;
-  bottom: 3px;
+  height: 22px;
+  width: 22px;
+  left: 5px;
+  bottom: 4px;
   background-color: white;
   box-shadow: 0 0 2px 2px black;;
   -webkit-transition: .4s;
@@ -188,28 +188,27 @@ input:checked + .slider:before {
   margin: 105px 0 105px 0;
 }
 
-.left {
-  width: 25%;
-  text-align: center;
-  background-color: rgb(184, 79, 79);
-}
-
-.right {
-  width: 75%;
-  margin-left: 2.5%;
-  background-color: green;
-}
-
 footer {
   position: absolute;
   width: 100%;
-  height: 50px;
   bottom: 0;
   left: 0;
+  padding: 20px 0;
 }
 
 .lower-bar {
   text-align: center;
+  color: var(--text-primary-high);
+}
+
+.lower-bar img {
+  width: 75px;
+  height: auto;
+  margin-top: 25px;
+}
+
+.lower-bar span {
+  font-style: italic;
 }
 
 @media only screen and (min-width: 650px) {

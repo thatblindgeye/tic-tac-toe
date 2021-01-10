@@ -23,15 +23,11 @@
 
 
 const settings = (() => {
-  const loadStorage = () => {
-    localStorage.getItem("light-theme");
-  }
-  const saveStorage = () => {
+  const saveLocal = () => {
     localStorage.setItem("light-theme", document.documentElement.hasAttribute("theme"));
   };
   return {
-    saveStorage,
-    loadStorage
+    saveLocal
   };
 })();
 
@@ -50,7 +46,7 @@ const pageTheme = (() => {
         localStorage.getItem("light-theme") !== null) {
       document.querySelector("#theme-modal").style.display = "none";
     };
-    settings.saveStorage();
+    settings.saveLocal();
   };
   window.addEventListener("load", _themeToggle);
   document.querySelector(".theme-slider").addEventListener("change", _themeToggle);
