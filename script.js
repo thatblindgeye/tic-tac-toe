@@ -1,7 +1,5 @@
 "use strict";
 
-// 1) load page with a theme selection modal; save this choice in local Storage, with an
-//    option to change the theme later (upper right of page)
 // 2) have an option to select player vs cpu or pvp; player 1 is always "x", and players 
 //    can enter their name(s)
 // 3) create gameboard with 9 cells, each of which has its text content filled in based on 
@@ -31,31 +29,28 @@ const settings = (() => {
   };
 })();
 
-const pageTheme = (() => {
-  const _themeToggle = (e) => {
-    if (e.type === "change" && !document.documentElement.hasAttribute("theme") ||
-        e.type === "click" && e.target.className === "light-theme-btn" ||
-        e.type === "load" && localStorage.getItem("light-theme") === "true") {
-      document.documentElement.setAttribute("theme", "light");
+const themeSelection = (() => {
+  const _themeOnLoad = () => {
+    if (localStorage.getItem("light-theme") === "true") {
       document.querySelector(".theme-slider").checked = true;
     } else {
-      document.documentElement.removeAttribute("theme");
       document.querySelector(".theme-slider").checked = false;
     };
-    if (document.querySelector("#theme-modal").style.display = "flex" &&
-        localStorage.getItem("light-theme") !== null) {
-      document.querySelector("#theme-modal").style.display = "none";
+    _themeToggle();
+  };
+  const _themeToggle = () => {
+    if (document.querySelector(".theme-slider").checked === true) {
+      document.documentElement.setAttribute("theme", "light");
+      document.querySelector(".lower-bar img").setAttribute("src", "images/Github-marks/GitHub-Mark-64px.png");
+    } else {
+      document.documentElement.removeAttribute("theme");
+      document.querySelector(".lower-bar img").setAttribute("src", "images/Github-marks/GitHub-Mark-Light-64px.png");
     };
     settings.saveLocal();
   };
-  window.addEventListener("load", _themeToggle);
+  window.addEventListener("load", _themeOnLoad);
   document.querySelector(".theme-slider").addEventListener("change", _themeToggle);
-  Array.from(document.querySelectorAll(".theme-button")).forEach(button => {
-    button.addEventListener("click", _themeToggle);
-  });
 })();
-
-
 
 
 

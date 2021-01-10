@@ -10,17 +10,6 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="theme-modal">
-      <h1>Choose a theme</h1>
-      <div class="theme-btn-container">
-        <button type="button" class="theme-button">
-          <img src="images/modal-btn-dark.png" alt="a tic-tac-toe board using a dark theme" class="dark-theme-btn" />
-        </button>
-        <button type="button" class="theme-button">
-          <img src="images/modal-btn-light.png" alt="a tic-tac-toe board using a light theme" class="light-theme-btn" />
-        </button>
-      </div>
-    </div>
     <header>
       <div class="top-bar">
         <label class="switch">
@@ -29,16 +18,36 @@
         </label>
       </div>
     </header>
-
-    <div class="page-container">
-
+    <div class="main-container">
+      <div class="game-options">
+          <button type="button" class="pvp-btn btn">2 Players</button>
+          <button type="button" class="pvc-btn btn">1 Player</button>
+        <input type="text" id="player-one-name">
+        <label for="player-one-name">Player 1's name</label>
+        <input type="text" id="player-two-name">
+        <label for="player-two-name">Player 2's name</label>
+        <button type="button" class="start-btn btn">Start Game</button>
+      </div>
+      <div id="gameboard-container">
+        <div class="gameboard">
+          <button type="button" id="0" class="gameboard-cell">X</button>
+          <button type="button" id="1" class="gameboard-cell">X</button>
+          <button type="button" id="2" class="gameboard-cell">X</button>
+          <button type="button" id="3" class="gameboard-cell">O</button>
+          <button type="button" id="4" class="gameboard-cell">O</button>
+          <button type="button" id="5" class="gameboard-cell">O</button>
+          <button type="button" id="6" class="gameboard-cell">X</button>
+          <button type="button" id="7" class="gameboard-cell">X</button>
+          <button type="button" id="8" class="gameboard-cell">X</button>
+        </div>
+      </div>
+  
     </div>
-
     <footer>
       <div class="lower-bar">
         Created by thatblindgeye, for TheOdinProject <br>
         <a href="https://github.com/thatblindgeye" target="_blank">
-          <img src="images/thatblindgeye-logos/thatblindgeye-icon-lg.png" alt="image link redirecting to github.com/thatblindgeye" />
+          <img src="images/Github-marks/GitHub-Mark-Light-64px.png" alt="image link redirecting to github.com/thatblindgeye" />
         </a> <br>
         <span>(opens in a new tab)</span>
       </div>
