@@ -1,0 +1,228 @@
+:root {
+  /* backgrounds */
+  --background-primary: rgb(18, 18, 18);
+  --elevation-00dp: rgb(18, 18, 18); /* text button, top app bar (resting), */
+  --elevation-01dp: rgb(30, 30, 30); /* search bar (resting), card (resting), switch */
+  --elevation-02dp: rgb(33, 33, 33); /* btn (resting) */
+  --elevation-03dp: rgb(37, 37, 37); /* refresh indicator search bar */
+  --elevation-04dp: rgb(39, 39, 39); /* top app bar (scrolled/resting) */
+  --elevation-06dp: rgb(44, 44, 44); /* floating action btn snackbar */
+  --elevation-08dp: rgb(46, 46, 46); /* bottom/side sheet, btm nav/app bar, menu/submenu, card (picked up),
+                                          btn (pressed) */
+  --elevation-12dp: rgb(51, 15, 51); /* floating action btn (pressed) */
+  --elevation-16dp: rgb(54, 54, 54); /* modal bottom/side, nav drawer */
+  --elevation-24dp: rgb(56, 56, 56); /* dialogue */
+  /* brand/element colors */
+  --color-primary: /* 200 tonal range */
+  --color-primary-var: /* 500 tonal range */
+  --color-secondary: /* 50-200 tonal range */
+  --color-secondary-var: /* 50-200 tonal range */
+  /* text */
+  --text-black-high: rgba(0, 0, 0, 0.87);
+  --text-black-med: rgba(0, 0, 0, 0.6);
+  --text-black-low: rgba(0, 0, 0, 0.38);
+  --text-white-high: rgba(255, 255, 255, 0.87);
+  --text-white-med: rgba(255, 255, 255, 0.6);
+  --text-white-low: rgba(255, 255, 255, 0.38);
+  /* misc */
+  --active: 87%;
+  --inactive: 60%;
+  --disabled: 38%;
+  --error: rgb(207, 102, 121);
+  --warning: rgb(255, 245, 157);
+  --success: rgb(165, 214, 167);
+  --info: rgb(144, 202, 249);
+}
+
+:root[theme="light"] {
+  /* backgrounds */
+  --background-primary: rgb(240, 240, 240);
+  /* brand/element colors */
+  --color-primary: /* 500 tonal range */
+  --color-primary-var: /* +/- 200 of primary */
+  --color-secondary: /* 500 tonal range */
+  --color-secondary-var: /* +/- 200 of primary */
+  /* text */
+  --text-black-high: rgba(0, 0, 0, 0.87);
+  --text-black-med: rgba(0, 0, 0, 0.6);
+  --text-black-low: rgba(0, 0, 0, 0.38);
+  --text-white-high: rgba(255, 255, 255, 0.87);
+  --text-white-med: rgba(255, 255, 255, 0.6);
+  --text-white-low: rgba(255, 255, 255, 0.38);
+  /* misc */
+  --active: 87%;
+  --inactive: 60%;
+  --disabled: 38%;
+  --error: rgb(176, 0, 32);
+  --warning: rgb(255, 235, 59);
+  --success: rgb(76, 175, 80);
+  --info: rgb(33, 150, 243);
+}
+
+body {
+  background-color: var(--background-primary);
+}
+
+#theme-modal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  text-align: center;
+  background-color:  rgba(18, 18, 18, 0.95);
+  color:  rgba(255, 255, 255, 0.87);
+}
+
+.theme-btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.theme-button {
+  width: 150px;
+  min-height: 150px;
+  margin: 0 10px;
+  padding: 0;
+  font-size: 1.25rem;
+  background-color: rgb(33, 33, 33);
+  color:  rgba(255, 255, 255, 0.87);
+  border: 2px outset rgba(255, 255, 255, 0.87);
+  transition: width 0.3s, height 0.3s;
+}
+
+.theme-button > img {
+  display: block;
+  width: 145px;
+  height: auto;
+  margin-left: auto;
+}
+
+.theme-button:hover {
+  cursor: pointer;
+}
+
+.theme-button:active {
+  border: 2px inset rgba(255, 255, 255, 0.87);
+}
+
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(17, 18, 37);
+  border: 1px solid white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  box-shadow: 0 0 2px 2px black;;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: rgb(235, 236, 255);
+  border: 2px solid black;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  transform: translateX(22px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.page-container {
+  display: flex;
+  width: 100%;
+  margin: 105px 0 105px 0;
+}
+
+.left {
+  width: 25%;
+  text-align: center;
+  background-color: rgb(184, 79, 79);
+}
+
+.right {
+  width: 75%;
+  margin-left: 2.5%;
+  background-color: green;
+}
+
+footer {
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  bottom: 0;
+  left: 0;
+}
+
+.lower-bar {
+  text-align: center;
+}
+
+@media only screen and (min-width: 650px) {
+  .theme-button {
+    width: 200px;
+    height: 200px;
+    margin: 0 25px;
+  }
+
+  .theme-button > img {
+    display: block;
+    width: 195px;
+    height: auto;
+    margin-left: auto;
+  }
+}
