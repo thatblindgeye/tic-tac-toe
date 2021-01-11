@@ -28,7 +28,14 @@
         <label for="player-two-name">Player 2's name</label>
         <button type="button" class="start-btn btn">Start Game</button>
       </div>
+      <div class="game-over-modal">
+        <div class="game-over-contents">
+          <span class="winner">Player 1 wins!</span>
+          <button type="button" class="restart-btn btn">Play Again</button>
+        </div>
+      </div>
       <div id="gameboard-container">
+        <span class="turn-tracker">Player 1's Turn</span>
         <div class="gameboard">
           <button type="button" id="0" class="gameboard-cell">X</button>
           <button type="button" id="1" class="gameboard-cell">X</button>
@@ -41,7 +48,6 @@
           <button type="button" id="8" class="gameboard-cell">X</button>
         </div>
       </div>
-  
     </div>
     <footer>
       <div class="lower-bar">
