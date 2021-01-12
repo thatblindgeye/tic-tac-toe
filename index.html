@@ -20,32 +20,33 @@
     </header>
     <div class="main-container">
       <div class="game-options">
-          <button type="button" class="pvp-btn btn">2 Players</button>
-          <button type="button" class="pvc-btn btn">1 Player</button>
-        <input type="text" id="player-one-name">
-        <label for="player-one-name">Player 1's name</label>
-        <input type="text" id="player-two-name">
-        <label for="player-two-name">Player 2's name</label>
+          <button type="button" id="pvp" class="gametype-btn btn">2 Players</button>
+          <button type="button" id="pvc" class="gametype-btn btn">1 Player</button>
+        <input type="text" id="player1-name" class="name-input" placeholder="'Player 1' if left blank">
+        <label for="player1-name">Player 1's name</label>
+        <input type="text" id="player2-name" class="name-input" placeholder="'Player 2' if left blank">
+        <label for="player2-name">Player 2's name</label>
         <button type="button" class="start-btn btn">Start Game</button>
       </div>
       <div class="game-over-modal">
         <div class="game-over-contents">
-          <span class="winner">Player 1 wins!</span>
-          <button type="button" class="restart-btn btn">Play Again</button>
+          <span class="winner"></span>
+          <button type="button" class="new-round btn">New Round</button>
+          <button type="button" class="new-game btn">New Game</button>
         </div>
       </div>
       <div id="gameboard-container">
-        <span class="turn-tracker">Player 1's Turn</span>
+        <span class="turn-tracker"></span>
         <div class="gameboard">
-          <button type="button" id="0" class="gameboard-cell">X</button>
-          <button type="button" id="1" class="gameboard-cell">X</button>
-          <button type="button" id="2" class="gameboard-cell">X</button>
-          <button type="button" id="3" class="gameboard-cell">O</button>
-          <button type="button" id="4" class="gameboard-cell">O</button>
-          <button type="button" id="5" class="gameboard-cell">O</button>
-          <button type="button" id="6" class="gameboard-cell">X</button>
-          <button type="button" id="7" class="gameboard-cell">X</button>
-          <button type="button" id="8" class="gameboard-cell">X</button>
+          <button type="button" id="0" class="gameboard-cell"></button>
+          <button type="button" id="1" class="gameboard-cell"></button>
+          <button type="button" id="2" class="gameboard-cell"></button>
+          <button type="button" id="3" class="gameboard-cell"></button>
+          <button type="button" id="4" class="gameboard-cell"></button>
+          <button type="button" id="5" class="gameboard-cell"></button>
+          <button type="button" id="6" class="gameboard-cell"></button>
+          <button type="button" id="7" class="gameboard-cell"></button>
+          <button type="button" id="8" class="gameboard-cell"></button>
         </div>
       </div>
     </div>
