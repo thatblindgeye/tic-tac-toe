@@ -79,6 +79,23 @@ const elements = (() => {
   const tracker = document.querySelector(".turn-tracker");
   const winnerText = document.querySelector(".winner");
 
+  const _toggleActive = (e) => {
+    if (!Array.from(e.target.classList).includes("active")) {
+      if (e.key === " " || e.key === "Enter") {
+        e.target.classList.add("active");
+      };
+    } else {
+      e.target.classList.remove("active");
+    };
+  };
+
+  Array.from(document.querySelectorAll("button")).forEach(button => {
+    button.addEventListener("keydown", _toggleActive);
+  });
+  Array.from(document.querySelectorAll("button")).forEach(button => {
+    button.addEventListener("keyup", _toggleActive);
+  });
+
   return {
     game,
     gameOver,
@@ -102,7 +119,7 @@ const gameSetup = (() => {
     } else {
       elements.p2Name.style.display = "block";
       elements.p2Label.style.display = "block";
-    }
+    };
     gameSetup.gameType = e.target.id;
   };
   Array.from(document.querySelectorAll(".gametype-btn")).forEach((button) => {
@@ -114,13 +131,13 @@ const gameSetup = (() => {
   function _updateNames() {
     if (elements.p1Name.value) {
       player1.name = elements.p1Name.value;
-    }
+    };
     if (gameSetup.gameType === "pvc") {
       player2.name = "Computer";
     } else if (elements.p2Name.value) {
       player2.name = elements.p2Name.value;
-    }
-  }
+    };
+  };
 
   document.querySelector(".start-btn").addEventListener("click", () => {
     _updateNames();
@@ -146,10 +163,8 @@ const gameBoard = (() => {
 
 const gameLogic = (() => {
   let currentTurn = "player1";
-  let turnNum = 1;
-
-  const _changeTurn = () => {
-    if (winner === true) return;
+  const _endOfTurn = () => {
+    if (endOfGame === true) return;
     currentTurn === "player1" ? (currentTurn = "player2"): (currentTurn = "player1");
     _updateTracker();
     turnNum++;
@@ -163,25 +178,48 @@ const gameLogic = (() => {
     if (e.target.textContent !== "") return;
     e.target.textContent = gameSetup[currentTurn].marker;
     _checkWinner();
-    _changeTurn();
+    _endOfTurn();
   };
   Array.from(document.querySelectorAll(".gameboard-cell")).forEach((cell) => {
     cell.addEventListener("click", _placeMarker);
   });
 
-  let winner = false;
+  const _winConditions = [
+    [gameBoard.board[0], gameBoard.board[1], gameBoard.board[2]],
+    [gameBoard.board[3], gameBoard.board[4], gameBoard.board[5]],
+    [gameBoard.board[6], gameBoard.board[7], gameBoard.board[8]],
+    [gameBoard.board[0], gameBoard.board[3], gameBoard.board[6]],
+    [gameBoard.board[1], gameBoard.board[4], gameBoard.board[7]],
+    [gameBoard.board[2], gameBoard.board[5], gameBoard.board[8]],
+    [gameBoard.board[0], gameBoard.board[4], gameBoard.board[8]],
+    [gameBoard.board[2], gameBoard.board[4], gameBoard.board[6]]
+  ];
+
+  const compareToConditions = (cell) => {
+    return cell.textContent === gameSetup[currentTurn].marker;
+  };
+
+  let endOfGame = false;
+  let turnNum = 1;
   const _checkWinner = () => {
-    if (turnNum === 9 && winner === false) {
+    for (let i = 0; i < 8; i++) {
+      if (_winConditions[i].every(compareToConditions)) {
+        endOfGame = true;
+        elements.gameOver.style.display = "flex";
+        elements.winnerText.textContent = gameSetup[currentTurn].name + " wins!";
+      };
+    };
+    if (turnNum === 9 && endOfGame === false) {
+      endOfGame = true;
       elements.gameOver.style.display = "flex";
-      elements.winnerText.textContent = "DRAW!";
-      winner = true;
-    }
+      elements.winnerText.textContent = "It's a TIE!";
+    };
   };
 
   const _newRound = () => {
     currentTurn = "player1";
     turnNum = 1;
-    winner = false;
+    endOfGame = false;
     elements.gameOver.style.display = "none";
     elements.tracker.textContent = gameSetup.player1.name + "'s Turn";
     gameBoard.board.forEach((cell) => {
