@@ -141,6 +141,7 @@ input:checked + .slider:before {
   color: var(--text-primary-high);
   border: 2px outset var(--text-primary-high);
   box-shadow: 0 0 2px 1px black;
+  background-image: url("i")
 }
 
 .game-options .btn:last-of-type {

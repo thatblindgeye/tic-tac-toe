@@ -68,6 +68,7 @@ const playerCreation = (name, marker) => {
 };
 
 const elements = (() => {
+  const boardCells = document.querySelector(".gameboard").children;
   const game = document.querySelector("#gameboard-container");
   const gameOver = document.querySelector(".game-over-modal");
   const newGame = document.querySelector(".new-game");
@@ -97,6 +98,7 @@ const elements = (() => {
   });
 
   return {
+    boardCells,
     game,
     gameOver,
     newGame,
@@ -155,7 +157,7 @@ const gameSetup = (() => {
 })();
 
 const gameBoard = (() => {
-  const board = Array.from(document.querySelectorAll(".gameboard-cell"));
+  const board = ["", "", "", "", "", "", "", "", ""];
   return {
     board
   };
@@ -163,6 +165,18 @@ const gameBoard = (() => {
 
 const gameLogic = (() => {
   let currentTurn = "player1";
+  const _placeMarker = (e) => {
+    if (gameBoard.board[e.target.id] !== "") return;
+    gameBoard.board[e.target.id] = gameSetup[currentTurn].marker;
+    e.target.textContent = gameSetup[currentTurn].marker;
+    _checkForWinner(7);
+    _endOfTurn();
+  };
+  Array.from(document.querySelectorAll(".gameboard-cell")).forEach((cell) => {
+    cell.addEventListener("click", _placeMarker);
+  });
+
+  let turnNum = 1;
   const _endOfTurn = () => {
     if (endOfGame === true) return;
     currentTurn === "player1" ? (currentTurn = "player2"): (currentTurn = "player1");
@@ -174,36 +188,31 @@ const gameLogic = (() => {
     elements.tracker.textContent = gameSetup[currentTurn].name + "'s Turn";
   };
 
-  const _placeMarker = (e) => {
-    if (e.target.textContent !== "") return;
-    e.target.textContent = gameSetup[currentTurn].marker;
-    _checkForWinner(7);
-    _endOfTurn();
+  const _render = (cell) => {
+    if (cell < 0) return;
+    elements.boardCells[cell].textContent = gameBoard.board[cell];
+    _render(cell - 1);
   };
-  Array.from(document.querySelectorAll(".gameboard-cell")).forEach((cell) => {
-    cell.addEventListener("click", _placeMarker);
-  });
 
   const _winConditions = [
-    [gameBoard.board[0], gameBoard.board[1], gameBoard.board[2]],
-    [gameBoard.board[3], gameBoard.board[4], gameBoard.board[5]],
-    [gameBoard.board[6], gameBoard.board[7], gameBoard.board[8]],
-    [gameBoard.board[0], gameBoard.board[3], gameBoard.board[6]],
-    [gameBoard.board[1], gameBoard.board[4], gameBoard.board[7]],
-    [gameBoard.board[2], gameBoard.board[5], gameBoard.board[8]],
-    [gameBoard.board[0], gameBoard.board[4], gameBoard.board[8]],
-    [gameBoard.board[2], gameBoard.board[4], gameBoard.board[6]]
+    [elements.boardCells[0], elements.boardCells[1], elements.boardCells[2]],
+    [elements.boardCells[3], elements.boardCells[4], elements.boardCells[5]],
+    [elements.boardCells[6], elements.boardCells[7], elements.boardCells[8]],
+    [elements.boardCells[0], elements.boardCells[3], elements.boardCells[6]],
+    [elements.boardCells[1], elements.boardCells[4], elements.boardCells[7]],
+    [elements.boardCells[2], elements.boardCells[5], elements.boardCells[8]],
+    [elements.boardCells[0], elements.boardCells[4], elements.boardCells[8]],
+    [elements.boardCells[2], elements.boardCells[4], elements.boardCells[6]]
   ];
 
-  const compareToConditions = (cell) => {
-    return cell.textContent === gameSetup[currentTurn].marker;
+  const _compareToConditions = (item) => {
+    return item.textContent === gameSetup[currentTurn].marker;
   };
 
   let endOfGame = false;
-  let turnNum = 1;
   const _checkForWinner = (conditionIndex) => {
     if (conditionIndex < 0) return;
-    if (!_winConditions[conditionIndex].every(compareToConditions)) {
+    if (!_winConditions[conditionIndex].every(_compareToConditions)) {
       _checkForWinner(conditionIndex - 1);
     } else {
       endOfGame = true;
@@ -217,15 +226,29 @@ const gameLogic = (() => {
     };
   };
 
+  const _cpuTurn = () => {
+    let validMoves = [];
+    function findValidCells() {
+      gameBoard.board.forEach((item, index) => {
+        if (item === "") {
+            validMoves.push(index);
+        };
+      });
+    };
+    findValidCells();
+    Math.floor(Math.random() * validMoves.length);
+  };
+
   const _newRound = () => {
     currentTurn = "player1";
     turnNum = 1;
     endOfGame = false;
     elements.gameOver.style.display = "none";
     elements.tracker.textContent = gameSetup.player1.name + "'s Turn";
-    gameBoard.board.forEach((cell) => {
-      cell.textContent = "";
+    gameBoard.board.forEach((item, index) => {
+      gameBoard.board[index] = "";
     });
+    _render(8);
   };
   elements.newRound.addEventListener("click", _newRound);
 
