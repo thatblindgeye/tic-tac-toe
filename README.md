@@ -5,9 +5,9 @@ Check out the live demo of <a href="https://thatblindgeye.github.io/tic-tac-toe/
 Features:
 1) Choose between a dark and light theme
 2) Play against another player or the computer (IN PROGRESS)
-3) Works on desktop and portable/mobile devices (TEST)
-4) Able to play via keyboard only or mouse (IN PROGRESS)
+3) Works on desktop and portable/mobile devices
+4) Able to play via keyboard only or mouse
 
 To Do:
-1) Code game logic, player selection, gameboard display logic
-2) Test, test, test
+1) Further testing
+2) Create AI algorithm for random placement in valid cells for 1 Player games

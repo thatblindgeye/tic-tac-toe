@@ -128,7 +128,7 @@ const gameSetup = (() => {
 
   const player1 = playerCreation("Player 1", "X");
   const player2 = playerCreation("Player 2", "O");
-  function _updateNames() {
+  const _updateNames = () => {
     if (elements.p1Name.value) {
       player1.name = elements.p1Name.value;
     };
@@ -139,25 +139,25 @@ const gameSetup = (() => {
     };
   };
 
-  document.querySelector(".start-btn").addEventListener("click", () => {
+  const _startGame = () => {
     _updateNames();
     elements.options.style.display = "none";
     elements.tracker.textContent = player1.name + "'s Turn";
     elements.game.style.display = "flex";
-  });
+  };
+  document.querySelector(".start-btn").addEventListener("click", _startGame);
 
   return {
-    player1,
-    player2,
     gameType,
+    player1,
+    player2
   };
 })();
 
 const gameBoard = (() => {
   const board = Array.from(document.querySelectorAll(".gameboard-cell"));
-  // const getBoard = () => board;
   return {
-    board,
+    board
   };
 })();
 
@@ -177,7 +177,7 @@ const gameLogic = (() => {
   const _placeMarker = (e) => {
     if (e.target.textContent !== "") return;
     e.target.textContent = gameSetup[currentTurn].marker;
-    _checkWinner();
+    _checkForWinner(7);
     _endOfTurn();
   };
   Array.from(document.querySelectorAll(".gameboard-cell")).forEach((cell) => {
@@ -201,13 +201,14 @@ const gameLogic = (() => {
 
   let endOfGame = false;
   let turnNum = 1;
-  const _checkWinner = () => {
-    for (let i = 0; i < 8; i++) {
-      if (_winConditions[i].every(compareToConditions)) {
-        endOfGame = true;
-        elements.gameOver.style.display = "flex";
-        elements.winnerText.textContent = gameSetup[currentTurn].name + " wins!";
-      };
+  const _checkForWinner = (conditionIndex) => {
+    if (conditionIndex < 0) return;
+    if (!_winConditions[conditionIndex].every(compareToConditions)) {
+      _checkForWinner(conditionIndex - 1);
+    } else {
+      endOfGame = true;
+      elements.gameOver.style.display = "flex";
+      elements.winnerText.textContent = gameSetup[currentTurn].name + " wins!";
     };
     if (turnNum === 9 && endOfGame === false) {
       endOfGame = true;
