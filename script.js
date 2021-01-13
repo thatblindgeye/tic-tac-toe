@@ -165,27 +165,37 @@ const gameBoard = (() => {
 
 const gameLogic = (() => {
   let currentTurn = "player1";
-  const _placeMarker = (e) => {
+  const _humandTurn = (e) => {
     if (gameBoard.board[e.target.id] !== "") return;
     gameBoard.board[e.target.id] = gameSetup[currentTurn].marker;
-    e.target.textContent = gameSetup[currentTurn].marker;
+    _render(8);
     _checkForWinner(7);
     _endOfTurn();
   };
   Array.from(document.querySelectorAll(".gameboard-cell")).forEach((cell) => {
-    cell.addEventListener("click", _placeMarker);
+    cell.addEventListener("click", (e) => {
+      _humandTurn(e);
+      if (gameSetup.gameType === "pvc" && currentTurn === "player2") {
+        _cpuTurn();
+      };
+    });
   });
 
-  let turnNum = 1;
-  const _endOfTurn = () => {
-    if (endOfGame === true) return;
-    currentTurn === "player1" ? (currentTurn = "player2"): (currentTurn = "player1");
-    _updateTracker();
-    turnNum++;
-  };
-
-  const _updateTracker = () => {
-    elements.tracker.textContent = gameSetup[currentTurn].name + "'s Turn";
+  const _cpuTurn = () => {
+    let validMoves = [];
+    function findValidCells() {
+      gameBoard.board.forEach((item, index) => {
+        if (item === "") {
+            validMoves.push(index);
+        };
+      });
+    };
+    findValidCells();
+    let cpuMove = validMoves[Math.floor(Math.random() * validMoves.length)];
+    gameBoard.board[cpuMove] = gameSetup[currentTurn].marker;
+    _render(8);
+    _checkForWinner(7);
+    _endOfTurn();
   };
 
   const _render = (cell) => {
@@ -226,17 +236,16 @@ const gameLogic = (() => {
     };
   };
 
-  const _cpuTurn = () => {
-    let validMoves = [];
-    function findValidCells() {
-      gameBoard.board.forEach((item, index) => {
-        if (item === "") {
-            validMoves.push(index);
-        };
-      });
-    };
-    findValidCells();
-    Math.floor(Math.random() * validMoves.length);
+  let turnNum = 1;
+  const _endOfTurn = () => {
+    if (endOfGame === true) return;
+    currentTurn === "player1" ? (currentTurn = "player2"): (currentTurn = "player1");
+    _updateTracker();
+    turnNum++;
+  };
+
+  const _updateTracker = () => {
+    elements.tracker.textContent = gameSetup[currentTurn].name + "'s Turn";
   };
 
   const _newRound = () => {
