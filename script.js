@@ -113,11 +113,15 @@ const gameSetup = (() => {
   const _updateNames = () => {
     if (elements.p1Name.value) {
       player1.name = elements.p1Name.value;
+    } else {
+      player1.name = "Player 1";
     };
     if (gameSetup.gameType === "pvc") {
       player2.name = "Computer";
     } else if (elements.p2Name.value) {
       player2.name = elements.p2Name.value;
+    } else {
+      player2.name = "Player 2";
     };
   };
 

@@ -1,5 +1,5 @@
 # Tic-Tac-Toe
-<center><img src="images/board-preview.png" style="width: 200px; height: auto;"></center>
+<center><img src="images/board-preview.png"></center>
 <br>
 This is my version of the Tic-Tac-Toe project for The Odin Project.
 
@@ -22,5 +22,3 @@ first player and O's for the second player. You are unable to pick a spot that h
 The goal of the game is to get your mark 3 in a row either horizontally, vertically, or diagonally.
 
 When you first open the webpage, choose either a 2 player (human vs human) or 1 player (vs computer) game. Then, enter the name(s) in the name field(s), or leave the field(s) blank for the default name(s). Then just click start and you'll be tic-tac-toeing!
-<br>
-<br>
