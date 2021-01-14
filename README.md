@@ -13,6 +13,7 @@ Check out the live demo of my <a href="https://thatblindgeye.github.io/tic-tac-t
 - Able to play via keyboard only or mouse
 <br>
 <br>
+
 ## How to Play:
 Even if you've never played tic-tac-toe before, it is a game that is as simple as can be.
 Each player takes a turn picking a spot on the board to place their marker, X's for the 
