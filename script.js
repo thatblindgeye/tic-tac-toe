@@ -1,24 +1,5 @@
 "use strict";
 
-// 2) have an option to select player vs cpu or pvp; player 1 is always "x", and players
-//    can enter their name(s)
-// 3) create gameboard with 9 cells, each of which has its text content filled in based on
-//    an array; each cell is labeled with id of 0 - 8, starting left to right for each row
-//    i.e.:
-//    0 1 2
-//    3 4 5
-//    6 7 8
-// 4) game logic:
-//    - create a variable for "turn" to keep track of whose turn it is and to pass turn
-//      after a valid move is made; if it is playerOne's turn, turn = playerTwo etc.
-//    - when a click occurs, only run the function to update the array/gameboard if the
-//      cell is empty.
-//    - if a click occurs in an empty cell:
-//      - add the current player's piece to the array
-//      - update the gameboard based on the array
-//      - check if there is 3 in a row or all cells (array items) are filled in and end
-//        the game if so, otherwise pass turn to the next player
-
 const settings = (() => {
   const saveLocal = () => {
     localStorage.setItem(
@@ -89,7 +70,6 @@ const elements = (() => {
       e.target.classList.remove("active");
     };
   };
-
   Array.from(document.querySelectorAll("button")).forEach(button => {
     button.addEventListener("keydown", _toggleActive);
   });
@@ -163,7 +143,7 @@ const gameBoard = (() => {
   };
 })();
 
-const gameLogic = (() => {
+const playGame = (() => {
   let currentTurn = "player1";
   const _humandTurn = (e) => {
     if (gameBoard.board[e.target.id] !== "") return;
@@ -172,15 +152,6 @@ const gameLogic = (() => {
     _checkForWinner(7);
     _endOfTurn();
   };
-  Array.from(document.querySelectorAll(".gameboard-cell")).forEach((cell) => {
-    cell.addEventListener("click", (e) => {
-      _humandTurn(e);
-      if (gameSetup.gameType === "pvc" && currentTurn === "player2") {
-        _cpuTurn();
-      };
-    });
-  });
-
   const _cpuTurn = () => {
     let validMoves = [];
     function findValidCells() {
@@ -197,32 +168,35 @@ const gameLogic = (() => {
     _checkForWinner(7);
     _endOfTurn();
   };
+  Array.from(document.querySelectorAll(".gameboard-cell")).forEach((cell) => {
+    cell.addEventListener("click", (e) => {
+      _humandTurn(e);
+      if (gameSetup.gameType === "pvc" && currentTurn === "player2") {
+        _cpuTurn();
+      };
+    });
+  });
 
-  const _render = (cell) => {
-    if (cell < 0) return;
-    elements.boardCells[cell].textContent = gameBoard.board[cell];
-    _render(cell - 1);
+  const _winConditions = () => {
+    return [
+      [gameBoard.board[0], gameBoard.board[1], gameBoard.board[2]],
+      [gameBoard.board[3], gameBoard.board[4], gameBoard.board[5]],
+      [gameBoard.board[6], gameBoard.board[7], gameBoard.board[8]],
+      [gameBoard.board[0], gameBoard.board[3], gameBoard.board[6]],
+      [gameBoard.board[1], gameBoard.board[4], gameBoard.board[7]],
+      [gameBoard.board[2], gameBoard.board[5], gameBoard.board[8]],
+      [gameBoard.board[0], gameBoard.board[4], gameBoard.board[8]],
+      [gameBoard.board[2], gameBoard.board[4], gameBoard.board[6]]
+    ];
   };
-
-  const _winConditions = [
-    [elements.boardCells[0], elements.boardCells[1], elements.boardCells[2]],
-    [elements.boardCells[3], elements.boardCells[4], elements.boardCells[5]],
-    [elements.boardCells[6], elements.boardCells[7], elements.boardCells[8]],
-    [elements.boardCells[0], elements.boardCells[3], elements.boardCells[6]],
-    [elements.boardCells[1], elements.boardCells[4], elements.boardCells[7]],
-    [elements.boardCells[2], elements.boardCells[5], elements.boardCells[8]],
-    [elements.boardCells[0], elements.boardCells[4], elements.boardCells[8]],
-    [elements.boardCells[2], elements.boardCells[4], elements.boardCells[6]]
-  ];
-
   const _compareToConditions = (item) => {
-    return item.textContent === gameSetup[currentTurn].marker;
+    return item === gameSetup[currentTurn].marker;
   };
 
   let endOfGame = false;
   const _checkForWinner = (conditionIndex) => {
     if (conditionIndex < 0) return;
-    if (!_winConditions[conditionIndex].every(_compareToConditions)) {
+    if (!_winConditions()[conditionIndex].every(_compareToConditions)) {
       _checkForWinner(conditionIndex - 1);
     } else {
       endOfGame = true;
@@ -246,6 +220,12 @@ const gameLogic = (() => {
 
   const _updateTracker = () => {
     elements.tracker.textContent = gameSetup[currentTurn].name + "'s Turn";
+  };
+
+  const _render = (cell) => {
+    if (cell < 0) return;
+    elements.boardCells[cell].textContent = gameBoard.board[cell];
+    _render(cell - 1);
   };
 
   const _newRound = () => {
